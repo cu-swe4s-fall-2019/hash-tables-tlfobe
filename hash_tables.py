@@ -102,11 +102,11 @@ class LinearProbe:
             hash_position = (start_hash + i) % self.N
             if self.table[hash_position] is None:
                 raise KeyError("LinearProbe.search: key " + key +
-                                 " is not in hashtable")
+                               " is not in hashtable")
             if self.table[hash_position][0] == key:
                 return self.table[hash_position][1]
         raise KeyError(("LinearProbe.search: key " + key +
-                          " is not in hashtable"))
+                        " is not in hashtable"))
 
 
 class ChainedHash:
@@ -177,7 +177,8 @@ class ChainedHash:
             returns True if value+key pair was added
         """
         start_hash = self.hash_function(key, self.N)
-        get_i0 = lambda a: a[0]
+
+        def get_i0(a): return a[0]
         if len(self.table[start_hash]) == 0:
             self.table[start_hash].append((key, value))
             self.capacity += 1
@@ -211,8 +212,8 @@ class ChainedHash:
         for k, v in self.table[start_hash]:
             if key == k:
                 return v
-        raise KeyError("ChainedHash.search: key "+key+" is not in the hash table")
-            
+        raise KeyError("ChainedHash.search: key " +
+                       key+" is not in the hash table")
 
 
 class QuadraticProbe:
@@ -315,8 +316,8 @@ class QuadraticProbe:
             hash_position = (start_hash + i**2) % self.N
             if self.table[hash_position] is None:
                 raise KeyError("QuadraticProbe.search: key " + key +
-                                 " is not in hashtable")
+                               " is not in hashtable")
             if self.table[hash_position][0] == key:
                 return self.table[hash_position][1]
         raise KeyError(("QuadraticProbe.search: key " + key +
-                          " is not in hashtable"))
+                        " is not in hashtable"))

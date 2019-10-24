@@ -46,10 +46,10 @@ class TestLinearProbe(unittest.TestCase):
 
     def test_linear_probe_replace_key(self):
         table = hash_tables.LinearProbe(hash_functions.h_ascii, 30)
-        table.add('ayo',10)
-        table.add('ayo',100)
+        table.add('ayo', 10)
+        table.add('ayo', 100)
         assert table.capacity == 1
-        assert table.search('ayo') == 100   
+        assert table.search('ayo') == 100
 
 
 class TestChainedHash(unittest.TestCase):
@@ -84,10 +84,11 @@ class TestChainedHash(unittest.TestCase):
 
     def test_chained_hash_replace_key(self):
         table = hash_tables.ChainedHash(hash_functions.h_ascii, 30)
-        table.add('ayo',10)
-        table.add('ayo',100)
+        table.add('ayo', 10)
+        table.add('ayo', 100)
         assert table.capacity == 1
         assert table.search('ayo') == 100
+
 
 class TestQuadraticProbe(unittest.TestCase):
     def test_quadratic_probe_incorrect_types(self):
@@ -121,8 +122,7 @@ class TestQuadraticProbe(unittest.TestCase):
 
     def test_quadratic_probe_replace_key(self):
         table = hash_tables.QuadraticProbe(hash_functions.h_ascii, 30)
-        table.add('ayo',10)
-        table.add('ayo',100)
+        table.add('ayo', 10)
+        table.add('ayo', 100)
         assert table.capacity == 1
-        assert table.search('ayo') == 100   
-    
+        assert table.search('ayo') == 100
