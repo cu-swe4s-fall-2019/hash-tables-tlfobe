@@ -47,4 +47,10 @@ def h_rolling(key, N):
         raise TypeError("h_rolling: key "+str(key)+" is not a string!")
     if not isinstance(N, int):
         raise TypeError("h_rolling: N "+str(N)+" is not an int!")
-    return None
+    
+    s = 0
+    for i in range(len(key)):
+        s += ord(key[i]) * 56 ** i
+    s = s % 2**64
+
+    return s % N
