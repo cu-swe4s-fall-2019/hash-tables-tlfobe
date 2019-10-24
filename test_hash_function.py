@@ -29,13 +29,15 @@ class TestHashFunctions(unittest.TestCase):
     def test_h_rolling_incorect_inputs(self):
         self.assertRaises(TypeError, hash_functions.h_rolling,
                           ["list", "of", "strings"], 10)
-        self.assertRaises(TypeError, hash_functions.h_rolling, "key", "string!")
+        self.assertRaises(
+            TypeError, hash_functions.h_rolling, "key", "string!")
 
     def test_h_rolling_simple_ascii(self):
         assert(hash_functions.h_rolling("A", 130) == 65)
 
     def test_h_rolling_wrap_number(self):
-        assert(hash_functions.h_rolling("AAAA", 10) == sum([65*56**i for i in range(4)]) % 10)
+        assert(hash_functions.h_rolling("AAAA", 10) ==
+               sum([65*56**i for i in range(4)]) % 10)
 
     def test_h_rolling_random(self):
         key = ''
@@ -70,7 +72,3 @@ class TestHashFunctions(unittest.TestCase):
             hash_value = hash_value * 1099511628211 & sys.maxsize
             hash_value = hash_value ^ val & sys.maxsize
         assert hash_functions.h_FNV(key) == hash_value
-
-
-
-
