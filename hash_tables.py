@@ -16,7 +16,7 @@ class LinearProbe:
         initialized hash table where keys + value pairs will populate
     capacity : int
         number of entries in the hash table
-    
+
     Methods
     -------
     __init__(hash_function, N)
@@ -26,7 +26,8 @@ class LinearProbe:
     search(key)
         search for a value given a key
     """
-    def __init__(self, hash_function, N = None):
+
+    def __init__(self, hash_function, N=None):
         """
         constructor method for Linear Probe
 
@@ -45,15 +46,17 @@ class LinearProbe:
             self.N = N
 
         if hash_function.__name__ not in ["h_FNV", "h_ascii", "h_rolling"]:
-            raise NotImplementedError("LinearProbe: hash function " + hash_function.__name__ + " is not implemented!")
+            raise NotImplementedError(
+                "LinearProbe: hash function " + hash_function.__name__ +
+                " is not implemented!")
         self.hash_function = hash_function
-        self.table = [ None for i in range(N)]
+        self.table = [None for i in range(N)]
         self.capacity = 0
 
     def add(self, key, value):
         """
         adds a value+key pair to the has table
-        
+
         Arguments
         ---------
         key : string
@@ -67,7 +70,7 @@ class LinearProbe:
             returns True if value+key pair was added
         """
         start_hash = self.hash_function(key, self.N)
-        
+
         for i in range(self.N):
             hash_position = (start_hash + i) % self.N
             if self.table[hash_position] is None:
@@ -84,23 +87,23 @@ class LinearProbe:
         ---------
         key : string
             string key to access hash table
-        
+
         Returns
         -------
         value : anything!
             value coresponding to hash adress
         """
         start_hash = self.hash_function(key, self.N)
-        
+
         for i in range(self.N):
             hash_position = (start_hash + i) % self.N
             if self.table[hash_position] is None:
-                    raise IndexError("LinearProbe.search: key " + key +
-                                     " is not in hashtable")
+                raise IndexError("LinearProbe.search: key " + key +
+                                 " is not in hashtable")
             if self.table[hash_position][0] == key:
                 return self.table[hash_position][1]
         raise IndexError(("LinearProbe.search: key " + key +
-                                     " is not in hashtable"))
+                          " is not in hashtable"))
 
 
 class ChainedHash:
