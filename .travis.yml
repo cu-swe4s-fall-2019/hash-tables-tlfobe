@@ -14,3 +14,4 @@ before_install:
 script:
     - python -m unittest test_hash_function.py
     - pycodestyle *.py
+    - bash test_collision_resolution.sh
