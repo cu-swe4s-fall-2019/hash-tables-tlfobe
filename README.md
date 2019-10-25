@@ -78,7 +78,7 @@ python collision_resolution.py --hash_fxn rolling --col_res LinearProbe --filena
 
 When using a polynomial `rolling` hash function on random words we get a much more random distribution of hash values.
 
-![Alt text](figures/example_rand__LinearProbe__rolling_add.png "LinearProbe Add Benchmark for rolling Hashing Random Words")
+![Alt text](figures/example_rand__LinearProbe_rolling_add.png "LinearProbe Add Benchmark for rolling Hashing Random Words")
 ![Alt text](figures/example_rand__LinearProbe_rolling_search.png "LinearProbe Search for rolling Hashing Random Words")
 
 We see much better performance as a function of load factor for the add and search benchmarks. We only see computational spikes when the hashtable begins reachin maximum capacity.
