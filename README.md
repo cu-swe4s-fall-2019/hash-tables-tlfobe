@@ -156,11 +156,52 @@ python collision_resolution.py --hash_fxn ascii --col_res QuadraticProbe --filen
 
 Here are the non-random distributions:
 
-![Alt text](figures/example_nonrand__QuadraticProbe_ascii_add.png "ChainedHash Add Benchmark for ascii Hashing Non-Random Words")
-![Alt text](figures/example_nonrand__QuadraticProbe_ascii_search.png "ChainedHash Search for ascii Hashing Non-Random Words")
+![Alt text](figures/example_nonrand__QuadraticProbe_ascii_add.png "QuadradicProbe Add Benchmark for ascii Hashing Non-Random Words")
+![Alt text](figures/example_nonrand__QuadraticProbe_ascii_search.png "QuadraticProbe Search for ascii Hashing Non-Random Words")
 
 We see the `QuadraticProbe`random word hash distribution adopts a $f(x) = \sqrt{x}$ like curve. This resolves the issue with `LinearProbe` where similar words hash to the same place. Now similar words hash to the same place, however the quadratic term brings them far from each other.
 
 We see a similar paterning as the `ChainedHashing` and `ascii` hash function. This occurs because similar keys are still hashed to the same place, and while conflicts aren't resolved to the next open index, they are pushed down the same $i^{2}$ series. This results in consistent series of indexes that are used to hash similar values, acting very similarly to an array.
 
 Now let's explore how `rolling` hash function interacts with the other two collision resolution methods.
+
+
+Now lets checkout polynomial `rolling` hash function when paired with `ChainedHash` on random words.
+
+```
+python collision_resolution.py --hash_fxn rolling --col_res ChainedHash --filename data/rand_words.txt --out_id figures/example_rand_
+```
+
+![Alt text](figures/example_rand__ChainedHash_rolling_add.png "ChainedHash Add Benchmark for rolling Hashing Random Words")
+![Alt text](figures/example_rand__ChainedHash_rolling_search.png "ChainedHash Search for rolling Hashing Random Words")
+
+From the benchmark, we see that this method this method does not suffer from approaching the load factor. Since the `rolling` hash function disperses values and the `ChainedHash` only has to iterate over the popoluated list at each hash site. We see some random fluctuation on the search benchmark, but for the most part seaching is unaffected by approaching the load factor.
+
+Now with non-random words!
+
+```
+python collision_resolution.py --hash_fxn rolling --col_res ChainedHash --filename data/non_rand_words.txt --out_id figures/example_nonrand_
+```
+
+![Alt text](figures/example_nonrand__QuadraticProbe_ascii_add.png "ChainedHash Add Benchmark for rolling Hashing Non-Random Words")
+![Alt text](figures/example_nonrand__QuadraticProbe_ascii_search.png "ChainedHash Search for rolling Hashing Non-Random Words")
+
+For the non-random words, there is no cost to add new values to hash table, however in the search benchmark we see a small monotonic dependence on the number of hashed words. Towards the end of the list, when values are added near a load factor of 1, these arrays, become long, therefore accessing values put in at a high load factor will have some iterations over a specific hash index array.
+
+Now we'll checkout `QuadraticProbe` conflict resolution strategy.
+
+For random words:
+```
+python collision_resolution.py --hash_fxn rolling --col_res QuadraticProbe --filename data/rand_words.txt --out_id figures/example_rand_
+```
+
+For non-random words:
+```
+python collision_resolution.py --hash_fxn rolling --col_res QuadraticProbe --filename data/non_rand_words.txt --out_id figures/example_nonrand_
+```
+
+These two plots are very similar to the `ChainedHash` conflict resolution and `rolling` hash function plots. As mentioned, the hashe series produced by the $i^2$ term acts similarly to arrays.
+
+We'll finish now by plotting the remaining graphs for the `FNV` hash function.
+
+
