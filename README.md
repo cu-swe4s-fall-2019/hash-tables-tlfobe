@@ -183,8 +183,8 @@ Now with non-random words!
 python collision_resolution.py --hash_fxn rolling --col_res ChainedHash --filename data/non_rand_words.txt --out_id figures/example_nonrand_
 ```
 
-![Alt text](figures/example_nonrand__QuadraticProbe_ascii_add.png "ChainedHash Add Benchmark for rolling Hashing Non-Random Words")
-![Alt text](figures/example_nonrand__QuadraticProbe_ascii_search.png "ChainedHash Search for rolling Hashing Non-Random Words")
+![Alt text](figures/example_nonrand__QuadraticProbe_rolling_add.png "QuadraticProbe Add Benchmark for rolling Hashing Non-Random Words")
+![Alt text](figures/example_nonrand__QuadraticProbe_rolling_search.png "QuadraticProbe Search for rolling Hashing Non-Random Words")
 
 For the non-random words, there is no cost to add new values to hash table, however in the search benchmark we see a small monotonic dependence on the number of hashed words. Towards the end of the list, when values are added near a load factor of 1, these arrays, become long, therefore accessing values put in at a high load factor will have some iterations over a specific hash index array.
 
@@ -194,14 +194,60 @@ For random words:
 ```
 python collision_resolution.py --hash_fxn rolling --col_res QuadraticProbe --filename data/rand_words.txt --out_id figures/example_rand_
 ```
+![Alt text](figures/example_rand__QuadraticProbe_rolling_add.png "QuadraticProbe Add Benchmark for rolling Hashing Random Words")
+![Alt text](figures/example_rand__QuadraticProbe_rolling_search.png "QuadraticProbe Search for rolling Hashing Random Words")
 
 For non-random words:
 ```
 python collision_resolution.py --hash_fxn rolling --col_res QuadraticProbe --filename data/non_rand_words.txt --out_id figures/example_nonrand_
 ```
 
+![Alt text](figures/example_nonrand__QuadraticProbe_rolling_add.png "QuadraticProbe Add Benchmark for rolling Hashing Non-Random Words")
+![Alt text](figures/example_nonrand__QuadraticProbe_rolling_search.png "QuadraticProbe Search for rolling Hashing Non-Random Words")
+
+
 These two plots are very similar to the `ChainedHash` conflict resolution and `rolling` hash function plots. As mentioned, the hashe series produced by the $i^2$ term acts similarly to arrays.
 
-We'll finish now by plotting the remaining graphs for the `FNV` hash function.
+We'll finish now by plotting the remaining cases for the `FNV` hash function with `ChainedHash` and `QuadraticProbe` conflic resolution methods.
+
+For `ChainedHash` with random words:
+
+```
+python collision_resolution.py --hash_fxn FNV --col_res ChainedHash --filename data/rand_words.txt --out_id figures/example_rand_
+```
+![Alt text](figures/example_rand__ChainedHash_FNV_add.png "ChainedHash Add Benchmark for FNV Hashing Random Words")
+![Alt text](figures/example_rand__ChainedHash_FNV_search.png "ChainedHash Search for FNV Hashing Random Words")
 
 
+These plots are similar to `ChainedHash` and `rolling` hash function combination. This is because both `FNV` and `rolling` hash functions gave similarly scrambled hash distributions.
+
+For `ChainedHash` with non-random words:
+
+```
+python collision_resolution.py --hash_fxn FNV --col_res ChainedHash --filename data/non_rand_words.txt --out_id figures/example_nonrand_
+```
+
+![Alt text](figures/example_nonrand__ChainedHash_FNV_add.png "ChainedHash Add Benchmark for FNV Non-Hashing Random Words")
+![Alt text](figures/example_nonrand__ChainedHash_FNV_search.png "ChainedHash Search for FNV Hashing Non-Random Words")
+
+We see some dependence on search time, as evidenced by the many collisions in the original `FNV` hash distribution. That being said, this combination of `FNV` hash function and `ChainedHash` conflict resolution is still very fast!
+
+Lastly, lets checkout the `FNV` hashfunction when combined with the `QuadraticProbe` conflict resolution method.
+
+For random values:
+```
+python collision_resolution.py --hash_fxn FNV --col_res QuadraticProbe --filename data/rand_words.txt --out_id figures/example_rand_
+```
+![Alt text](figures/example_rand__QuadraticProbe_FNV_add.png "QuadraticProbe Add Benchmark for FNV Hashing Random Words")
+![Alt text](figures/example_rand__QuadraticProbe_FNV_search.png "QuadraticProbe Search for FNV Hashing Random Words")
+
+And for non-random values:
+```
+python collision_resolution.py --hash_fxn FNV --col_res QuadraticProbe --filename data/non_rand_words.txt --out_id figures/example_nonrand_
+```
+![Alt text](figures/example_nonrand__QuadraticProbe_FNV_add.png "QuadraticProbe Add Benchmark for FNV Hashing Non-Random Words")
+![Alt text](figures/example_nonrand__QuadraticProbe_FNV_search.png "QuadraticProbe Search for FNV Hashing Non-Random Words")
+
+Both the random and non-random words add to these hash-tables with no effect from load factor. The search function for the random values, looks similar to the `rolling` and `ChainedHash` combination, due to the array like nature of the $i^2$ term.
+
+We also see similarities between the non-random `FNV` and `QuadraticProbe` benchmarks and the `ChainedHash` and `rolling` benchmarks, due to that same $i^2$ term acting like independent arrays.
