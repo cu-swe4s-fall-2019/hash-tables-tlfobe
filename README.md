@@ -74,12 +74,12 @@ Now we'll try a more dispersive hash function, the polynomial `rolling` hash fun
 ```
 python collision_resolution.py --hash_fxn rolling --col_res LinearProbe --filename data/rand_words.txt --out_id figures/example_rand_
 ```
-![Alt text](figures/example_rand_rolling.png "Hash Values for rolling Hashing Random Words")
+![Alt text](figures/example_rand__rolling.png "Hash Values for rolling Hashing Random Words")
 
 When using a polynomial `rolling` hash function on random words we get a much more random distribution of hash values.
 
-![Alt text](figures/example_rand_LinearProbe_rolling_add.png "LinearProbe Add Benchmark for rolling Hashing Random Words")
-![Alt text](figures/example_rand_LinearProbe_rolling_search.png "LinearProbe Search for rolling Hashing Random Words")
+![Alt text](figures/example_rand__LinearProbe__rolling_add.png "LinearProbe Add Benchmark for rolling Hashing Random Words")
+![Alt text](figures/example_rand__LinearProbe_rolling_search.png "LinearProbe Search for rolling Hashing Random Words")
 
 We see much better performance as a function of load factor for the add and search benchmarks. We only see computational spikes when the hashtable begins reachin maximum capacity.
 
@@ -89,12 +89,12 @@ We'll now take a look at a polynomial `rolling` hash's efficiency at hashing non
 python collision_resolution.py --hash_fxn rolling --col_res LinearProbe --filename data/non_rand_words.txt --out_id figures/example_nonrand_
 ```
 
-![Alt text](figures/example_nonrand_rolling.png "Hash Values for rolling Hashing Non-Random Words")
+![Alt text](figures/example_nonrand__rolling.png "Hash Values for rolling Hashing Non-Random Words")
 
 For the non-random words, we do see patterns in the hasing values, as many of the hashes share several characters, however these hash values are much more evenly distributed compared to the `ascii` hash distribution.
 
-![Alt text](figures/example_nonrand_LinearProbe_rolling_add.png "LinearProbe Add Benchmark for rolling Hashing Non-Random Words")
-![Alt text](figures/example_nonrand_LinearProbe_rolling_search.png "LinearProbe Search for rolling Hashing Non-Random Words")
+![Alt text](figures/example_nonrand__LinearProbe_rolling_add.png "LinearProbe Add Benchmark for rolling Hashing Non-Random Words")
+![Alt text](figures/example_nonrand__LinearProbe_rolling_search.png "LinearProbe Search for rolling Hashing Non-Random Words")
 
 We see similar improvements as the random word case. However, we see a much more effective performance at higher load factors, possibly due to how similar words are more likely to be placed far from each other.
 
@@ -104,12 +104,12 @@ We'll also cover the `FNV` hasing function was designed as a fast hash. It takes
 python collision_resolution.py --hash_fxn FNV --col_res LinearProbe --filename data/rand_words.txt --out_id figures/example_rand_
 ```
 
-![Alt text](figures/example_nonrand_FNV.png "Hash Values for FNV Hashing Non-Random Words")
+![Alt text](figures/example_nonrand__FNV.png "Hash Values for FNV Hashing Non-Random Words")
 
 We see the `FNV` hash gives a similarly scrambled hash distribution as the `rolling` hash function.
 
-![Alt text](figures/example_rand_LinearProbe_FNV_add.png "LinearProbe Add Benchmark for FNV Hashing Non-Random Words")
-![Alt text](figures/example_rand_LinearProbe_FNV_search.png "LinearProbe Search for FNV Hashing Non-Random Words")
+![Alt text](figures/example_rand__LinearProbe_FNV_add.png "LinearProbe Add Benchmark for FNV Hashing Non-Random Words")
+![Alt text](figures/example_rand__LinearProbe_FNV_search.png "LinearProbe Search for FNV Hashing Non-Random Words")
 
 Similarly to the `rolling` hash function we see a great improvement over the `ascii` hashfunction. Speedwise this implementation is similar to the `rolling` hash function.
 
@@ -122,8 +122,8 @@ python collision_resolution.py --hash_fxn ascii --col_res ChainedHash --filename
 
 As we are using the same `ascii` hash function as shown above, We'll only discuss the add and search benchmarks.
 
-![Alt text](figures/example_rand_ChainedHash_ascii_add.png "ChainedHash Add Benchmark for ascii Hashing Random Words")
-![Alt text](figures/example_rand_ChainedHash_ascii_search.png "ChainedHash Search for ascii Hashing Random Words")
+![Alt text](figures/example_rand__ChainedHash_ascii_add.png "ChainedHash Add Benchmark for ascii Hashing Random Words")
+![Alt text](figures/example_rand__ChainedHash_ascii_search.png "ChainedHash Search for ascii Hashing Random Words")
 
 In chained hash tables, since arrays are at each index, we don't see much extra time spent adding values at similar hash values. The search table does not share the same distribution, but is still quite fast. These striations likely reflect the average size of the array a hash index has.
 
@@ -134,9 +134,33 @@ We next explore `ChainedHash` and the `ascii` hash function using non-random wor
 python collision_resolution.py --hash_fxn ascii --col_res ChainedHash --filename data/non_rand_words.txt --out_id figures/example_nonrand_
 ```
 
-![Alt text](figures/example_nonrand_ChainedHash_ascii_add.png "ChainedHash Add Benchmark for ascii Hashing Non-Random Words")
-![Alt text](figures/example_nonrand_ChainedHash_ascii_search.png "ChainedHash Search for ascii Hashing Non-Random Words")
+![Alt text](figures/example_nonrand__ChainedHash_ascii_add.png "ChainedHash Add Benchmark for ascii Hashing Non-Random Words")
+![Alt text](figures/example_nonrand__ChainedHash_ascii_search.png "ChainedHash Search for ascii Hashing Non-Random Words")
 
 When using `ascii` hashing with `ChainedHash` collision strategy, we see a similar linear as with `LinearProbe`, however we see many more values between quickly hashed values and those following the linear relationship. Rather than having to iterate over the entire hashtable as is the case in the `LinearProbe` algortihm, here we only iterate over the lists at each hash index, however as we appreach our load factor, these become highly populated due to the closeness of mapping from `ascii` hasing on non-random words.
 
-Now we'll look into how `QuadraticHashing` performs compared to the other two hashing methods.
+Now we'll look into how `QuadraticProbe` performs compared to the other two hashing methods.
+
+```
+python collision_resolution.py --hash_fxn ascii --col_res QuadraticProbe --filename data/rand_words.txt --out_id figures/example_rand_
+```
+
+Here are the random distributions:
+
+![Alt text](figures/example_rand__QuadraticProbe_ascii_add.png "ChainedHash Add Benchmark for ascii Hashing Non-Random Words")
+![Alt text](figures/example_rand__QuadraticProbe_ascii_search.png "ChainedHash Search for ascii Hashing Non-Random Words")
+
+```
+python collision_resolution.py --hash_fxn ascii --col_res QuadraticProbe --filename data/non_rand_words.txt --out_id figures/example_nonrand_
+```
+
+Here are the non-random distributions:
+
+![Alt text](figures/example_nonrand__QuadraticProbe_ascii_add.png "ChainedHash Add Benchmark for ascii Hashing Non-Random Words")
+![Alt text](figures/example_nonrand__QuadraticProbe_ascii_search.png "ChainedHash Search for ascii Hashing Non-Random Words")
+
+We see the `QuadraticProbe`random word hash distribution adopts a $f(x) = \sqrt{x}$ like curve. This resolves the issue with `LinearProbe` where similar words hash to the same place. Now similar words hash to the same place, however the quadratic term brings them far from each other.
+
+We see a similar paterning as the `ChainedHashing` and `ascii` hash function. This occurs because similar keys are still hashed to the same place, and while conflicts aren't resolved to the next open index, they are pushed down the same $i^{2}$ series. This results in consistent series of indexes that are used to hash similar values, acting very similarly to an array.
+
+Now let's explore how `rolling` hash function interacts with the other two collision resolution methods.
