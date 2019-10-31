@@ -159,6 +159,7 @@ class ChainedHash:
         self.hash_function = hash_function
         self.table = [[] for i in range(N)]
         self.capacity = 0
+        self.keys = []
 
     def add(self, key, value):
         """
@@ -182,11 +183,13 @@ class ChainedHash:
         if len(self.table[start_hash]) == 0:
             self.table[start_hash].append((key, value))
             self.capacity += 1
+            self.keys.append(key)
             return True
         keys = [get_i0(k_v_pair) for k_v_pair in self.table[start_hash]]
         if key not in keys:
             self.table[start_hash].append((key, value))
             self.capacity += 1
+            self.keys.append(key)
             return True
         else:
             self.table[start_hash][keys.index(key)] = (key, value)
