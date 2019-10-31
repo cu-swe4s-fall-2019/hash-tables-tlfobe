@@ -62,6 +62,7 @@ class TestChainedHash(unittest.TestCase):
     def test_chained_hash_add_empty(self):
         table = hash_tables.ChainedHash(hash_functions.h_ascii, 100)
         assert(table.add('woah!', 1) is True)
+        assert('woah!' in table.keys)
 
     def test_chained_hash_search_1(self):
         table = hash_tables.ChainedHash(hash_functions.h_ascii, 100)
@@ -88,6 +89,15 @@ class TestChainedHash(unittest.TestCase):
         table.add('ayo', 100)
         assert table.capacity == 1
         assert table.search('ayo') == 100
+
+    def test_chained_hash_stored_keys(self):
+        table = hash_tables.ChainedHash(hash_functions.h_ascii, 50)
+        table.add('new_key', 10)
+        table.add('another_key', 30)
+        table.add('additional_key', 40)
+        table.add('new_key', 30)
+        assert len(table.keys) == 3
+ 
 
 
 class TestQuadraticProbe(unittest.TestCase):
