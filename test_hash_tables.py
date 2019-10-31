@@ -97,7 +97,6 @@ class TestChainedHash(unittest.TestCase):
         table.add('additional_key', 40)
         table.add('new_key', 30)
         assert len(table.keys) == 3
- 
 
 
 class TestQuadraticProbe(unittest.TestCase):
