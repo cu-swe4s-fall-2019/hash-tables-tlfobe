@@ -14,11 +14,11 @@ class TestLinearProbe(unittest.TestCase):
 
     def test_linear_probe_add_empty(self):
         table = hash_tables.LinearProbe(hash_functions.h_ascii, 100)
-        assert(table.add('woah!', 1) is True)
+        assert(table.insert('woah!', 1) is True)
 
     def test_linear_probe_search_1(self):
         table = hash_tables.LinearProbe(hash_functions.h_ascii, 100)
-        table.add('woah!', 1)
+        table.insert('woah!', 1)
         assert(table.search('woah!') == 1)
 
     def test_linear_probe_add_search_random(self):
@@ -28,16 +28,16 @@ class TestLinearProbe(unittest.TestCase):
             val = random.randint(97, 122)
             key += chr(val)
         value = random.randint(0, 10000)
-        assert(table.add(key, value) is True)
+        assert(table.insert(key, value) is True)
         assert(table.search(key) == value)
 
     def test_linear_probe_full_random(self):
         size = random.randint(1, 10000)
         table = hash_tables.LinearProbe(hash_functions.h_ascii, size)
         for i in range(size):
-            table.add(str(i), i)
+            table.insert(str(i), i)
 
-        self.assertRaises(IndexError, table.add, 'full', 10)
+        self.assertRaises(IndexError, table.insert, 'full', 10)
         self.assertRaises(KeyError, table.search, 'full')
 
     def test_linear_probe_key_not_in_table(self):
@@ -46,8 +46,8 @@ class TestLinearProbe(unittest.TestCase):
 
     def test_linear_probe_replace_key(self):
         table = hash_tables.LinearProbe(hash_functions.h_ascii, 30)
-        table.add('ayo', 10)
-        table.add('ayo', 100)
+        table.insert('ayo', 10)
+        table.insert('ayo', 100)
         assert table.capacity == 1
         assert table.search('ayo') == 100
 
@@ -61,12 +61,12 @@ class TestChainedHash(unittest.TestCase):
 
     def test_chained_hash_add_empty(self):
         table = hash_tables.ChainedHash(hash_functions.h_ascii, 100)
-        assert(table.add('woah!', 1) is True)
+        assert(table.insert('woah!', 1) is True)
         assert('woah!' in table.keys)
 
     def test_chained_hash_search_1(self):
         table = hash_tables.ChainedHash(hash_functions.h_ascii, 100)
-        table.add('woah!', 1)
+        table.insert('woah!', 1)
         assert(table.search('woah!') == 1)
 
     def test_chained_hash_add_search_random(self):
@@ -76,7 +76,7 @@ class TestChainedHash(unittest.TestCase):
             val = random.randint(97, 122)
             key += chr(val)
         value = random.randint(0, 10000)
-        assert(table.add(key, value) is True)
+        assert(table.insert(key, value) is True)
         assert(table.search(key) == value)
 
     def test_chained_hash_key_not_in_table(self):
@@ -85,17 +85,17 @@ class TestChainedHash(unittest.TestCase):
 
     def test_chained_hash_replace_key(self):
         table = hash_tables.ChainedHash(hash_functions.h_ascii, 30)
-        table.add('ayo', 10)
-        table.add('ayo', 100)
+        table.insert('ayo', 10)
+        table.insert('ayo', 100)
         assert table.capacity == 1
         assert table.search('ayo') == 100
 
     def test_chained_hash_stored_keys(self):
         table = hash_tables.ChainedHash(hash_functions.h_ascii, 50)
-        table.add('new_key', 10)
-        table.add('another_key', 30)
-        table.add('additional_key', 40)
-        table.add('new_key', 30)
+        table.insert('new_key', 10)
+        table.insert('another_key', 30)
+        table.insert('additional_key', 40)
+        table.insert('new_key', 30)
         assert len(table.keys) == 3
 
 
@@ -108,11 +108,11 @@ class TestQuadraticProbe(unittest.TestCase):
 
     def test_quadratic_probe_add_empty(self):
         table = hash_tables.QuadraticProbe(hash_functions.h_ascii, 100)
-        assert(table.add('woah!', 1) is True)
+        assert(table.insert('woah!', 1) is True)
 
     def test_quadratic_probe_search_1(self):
         table = hash_tables.QuadraticProbe(hash_functions.h_ascii, 100)
-        table.add('woah!', 1)
+        table.insert('woah!', 1)
         assert(table.search('woah!') == 1)
 
     def test_quadratic_probe_add_search_random(self):
@@ -122,7 +122,7 @@ class TestQuadraticProbe(unittest.TestCase):
             val = random.randint(97, 122)
             key += chr(val)
         value = random.randint(0, 10000)
-        assert(table.add(key, value) is True)
+        assert(table.insert(key, value) is True)
         assert(table.search(key) == value)
 
     def test_quadratic_probe_key_not_in_table(self):
@@ -131,7 +131,7 @@ class TestQuadraticProbe(unittest.TestCase):
 
     def test_quadratic_probe_replace_key(self):
         table = hash_tables.QuadraticProbe(hash_functions.h_ascii, 30)
-        table.add('ayo', 10)
-        table.add('ayo', 100)
+        table.insert('ayo', 10)
+        table.insert('ayo', 100)
         assert table.capacity == 1
         assert table.search('ayo') == 100

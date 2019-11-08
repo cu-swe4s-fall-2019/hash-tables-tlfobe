@@ -85,7 +85,7 @@ def main():
     load_factors = []
     for word in keys:
         t0 = time.time()
-        hash_table.add(word, word)
+        hash_table.insert(word, word)
         t1 = time.time()
         times_to_add.append(t1 - t0)
         load_factors.append(hash_table.capacity/hash_table.N)
