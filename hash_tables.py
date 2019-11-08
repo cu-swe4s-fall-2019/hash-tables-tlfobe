@@ -27,7 +27,7 @@ class LinearProbe:
         search for a value given a key
     """
 
-    def __init__(self, hash_function, N=None):
+    def __init__(self, hash_function=hash_functions.h_rolling, N=20000):
         """
         constructor method for Linear Probe
 
@@ -101,12 +101,10 @@ class LinearProbe:
         for i in range(self.N):
             hash_position = (start_hash + i) % self.N
             if self.table[hash_position] is None:
-                raise KeyError("LinearProbe.search: key " + key +
-                               " is not in hashtable")
+                return -1
             if self.table[hash_position][0] == key:
                 return self.table[hash_position][1]
-        raise KeyError(("LinearProbe.search: key " + key +
-                        " is not in hashtable"))
+        return -1
 
 
 class ChainedHash:
@@ -134,7 +132,7 @@ class ChainedHash:
         search for a value given a key
     """
 
-    def __init__(self, hash_function, N=None):
+    def __init__(self, hash_function=hash_functions.h_rolling, N=20000):
         """
         constructor method for Linear Probe
 
@@ -215,8 +213,7 @@ class ChainedHash:
         for k, v in self.table[start_hash]:
             if key == k:
                 return v
-        raise KeyError("ChainedHash.search: key " +
-                       key+" is not in the hash table")
+        return -1
 
 
 class QuadraticProbe:
@@ -244,7 +241,7 @@ class QuadraticProbe:
         search for a value given a key
     """
 
-    def __init__(self, hash_function, N=None):
+    def __init__(self, hash_function=hash_functions.h_rolling, N=20000):
         """
         constructor method for QuadraticProbe
 
@@ -318,9 +315,7 @@ class QuadraticProbe:
         for i in range(self.N):
             hash_position = (start_hash + i**2) % self.N
             if self.table[hash_position] is None:
-                raise KeyError("QuadraticProbe.search: key " + key +
-                               " is not in hashtable")
+                return -1
             if self.table[hash_position][0] == key:
                 return self.table[hash_position][1]
-        raise KeyError(("QuadraticProbe.search: key " + key +
-                        " is not in hashtable"))
+        return -1

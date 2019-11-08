@@ -38,11 +38,11 @@ class TestLinearProbe(unittest.TestCase):
             table.insert(str(i), i)
 
         self.assertRaises(IndexError, table.insert, 'full', 10)
-        self.assertRaises(KeyError, table.search, 'full')
+        assert table.search('full') == -1
 
     def test_linear_probe_key_not_in_table(self):
         table = hash_tables.LinearProbe(hash_functions.h_ascii, 30)
-        self.assertRaises(KeyError, table.search, 'not in table')
+        assert table.search('not in table') == -1
 
     def test_linear_probe_replace_key(self):
         table = hash_tables.LinearProbe(hash_functions.h_ascii, 30)
@@ -81,7 +81,7 @@ class TestChainedHash(unittest.TestCase):
 
     def test_chained_hash_key_not_in_table(self):
         table = hash_tables.ChainedHash(hash_functions.h_ascii, 30)
-        self.assertRaises(KeyError, table.search, 'not in table')
+        assert table.search('not in table') == -1
 
     def test_chained_hash_replace_key(self):
         table = hash_tables.ChainedHash(hash_functions.h_ascii, 30)
@@ -127,7 +127,7 @@ class TestQuadraticProbe(unittest.TestCase):
 
     def test_quadratic_probe_key_not_in_table(self):
         table = hash_tables.QuadraticProbe(hash_functions.h_ascii, 30)
-        self.assertRaises(KeyError, table.search, 'not in table')
+        assert table.search('not in table') == -1
 
     def test_quadratic_probe_replace_key(self):
         table = hash_tables.QuadraticProbe(hash_functions.h_ascii, 30)
