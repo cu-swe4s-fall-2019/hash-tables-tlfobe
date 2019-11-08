@@ -27,7 +27,7 @@ class LinearProbe:
         search for a value given a key
     """
 
-    def __init__(self, hash_function, N=None):
+    def __init__(self, hash_function=hash_functions.h_rolling, N=20000):
         """
         constructor method for Linear Probe
 
@@ -134,7 +134,7 @@ class ChainedHash:
         search for a value given a key
     """
 
-    def __init__(self, hash_function, N=None):
+    def __init__(self, hash_function=hash_functions.h_rolling, N=20000):
         """
         constructor method for Linear Probe
 
@@ -244,7 +244,7 @@ class QuadraticProbe:
         search for a value given a key
     """
 
-    def __init__(self, hash_function, N=None):
+    def __init__(self, hash_function=hash_functions.h_rolling, N=20000):
         """
         constructor method for QuadraticProbe
 
