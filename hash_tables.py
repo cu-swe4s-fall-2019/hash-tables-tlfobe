@@ -53,7 +53,7 @@ class LinearProbe:
         self.table = [None for i in range(N)]
         self.capacity = 0
 
-    def add(self, key, value):
+    def insert(self, key, value):
         """
         adds a value+key pair to the has table
 
@@ -270,7 +270,7 @@ class QuadraticProbe:
         self.table = [None for i in range(N)]
         self.capacity = 0
 
-    def add(self, key, value):
+    def insert(self, key, value):
         """
         adds a value+key pair to the has table
 
