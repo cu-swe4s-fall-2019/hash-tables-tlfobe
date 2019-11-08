@@ -161,7 +161,7 @@ class ChainedHash:
         self.capacity = 0
         self.keys = []
 
-    def add(self, key, value):
+    def insert(self, key, value):
         """
         adds a value+key pair to the has table
 
